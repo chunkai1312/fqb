@@ -1,6 +1,6 @@
 # fqb [![Build Status][travis-image]][travis-url]
 
-> Facebook Graph API query builder for Node.js
+> Facebook Graph API query builder for JavaScript
 
 ## Install
 
