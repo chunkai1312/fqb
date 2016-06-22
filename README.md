@@ -4,8 +4,24 @@
 
 ## Install
 
-```sh
+```shell
 $ npm install --save fqb
+```
+
+### Browser
+
+Add a `<script>` to your `index.html`:
+
+```html
+<script src="/node_modules/fqb/dist/fqb.min.js"></script>
+```
+
+### Node.js / Webpack
+
+Import the module to your `*.js` file:
+
+```js
+const FQB = require('fqb');
 ```
 
 ## Usage
@@ -15,8 +31,6 @@ $ npm install --save fqb
 Below is a basic example that gets the logged in user's `id` & `email` (assuming the user granted your app [the `email` permission](https://developers.facebook.com/docs/facebook-login/permissions#reference-email)).
 
 ```js
-const FQB = require('fqb');
-
 const fqb = new FQB()
   .node('me')
   .fields(['id', 'email'])
@@ -35,8 +49,6 @@ console.log(fqb.asUrl());
 The following example will get the logged in user's name & first 5 photos they are tagged in with just one call to Graph.
 
 ```js
-const FQB = require('fqb');
-
 const photosEdge = new FQB()
   .edge('photos')
   .fields(['id', 'source'])
@@ -56,8 +68,6 @@ console.log(fqb.asUrl());
 The following example will get user `1234`'s name, and first 10 photos they are tagged in. For each photo it gets the first 2 comments and all the likes.
 
 ```js
-const FQB = require('fqb');
-
 const likesEdge = new FQB()
   .edge('likes');
 
