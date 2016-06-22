@@ -92,6 +92,10 @@ $ npm test
 
 Inspired by [FacebookQueryBuilder](https://github.com/SammyK/FacebookQueryBuilder)
 
+## Reference
+
+Facebook's [Graph API](https://developers.facebook.com/docs/graph-api)
+
 ## License
 
 MIT © [Chun-Kai Wang](https://github.com/chunkai1312)
