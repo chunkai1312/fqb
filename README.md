@@ -1,4 +1,4 @@
-# fqb
+# fqb [![Build Status][travis-image]][travis-url]
 
 > Facebook Graph API query builder for Node.js
 
@@ -96,3 +96,6 @@ Inspired by [FacebookQueryBuilder](https://github.com/SammyK/FacebookQueryBuilde
 ## License
 
 MIT © [Chun-Kai Wang](https://github.com/chunkai1312)
+
+[travis-image]: https://travis-ci.org/chunkai1312/fqb.svg?branch=master
+[travis-url]: https://travis-ci.org/chunkai1312/fqb
