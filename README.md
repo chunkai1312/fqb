@@ -1,4 +1,4 @@
-# fqb [![Build Status][travis-image]][travis-url]
+# fqb [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url]
 
 > Facebook Graph API query builder for JavaScript
 
@@ -110,5 +110,7 @@ Facebook's [Graph API](https://developers.facebook.com/docs/graph-api)
 
 MIT © [Chun-Kai Wang](https://github.com/chunkai1312)
 
+[npm-image]: https://badge.fury.io/js/fqb.svg
+[npm-url]: https://npmjs.org/package/fqb
 [travis-image]: https://travis-ci.org/chunkai1312/fqb.svg?branch=master
 [travis-url]: https://travis-ci.org/chunkai1312/fqb
