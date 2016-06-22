@@ -21,8 +21,7 @@ const fqb = new FQB()
   .node('me')
   .fields(['id', 'email'])
   .accessToken('user-access-token')
-  .graphVersion('v2.6')
-  .asUrl();
+  .graphVersion('v2.6');
 
 console.log(fqb.asEndpoint());
 // /v2.6/me?access_token=user-access-token&fields=id,email
