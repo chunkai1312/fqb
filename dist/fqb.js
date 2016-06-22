@@ -6801,7 +6801,7 @@ exports.isBuffer = function (obj) {
     /**
      * New up an instance of self.
      *
-     * @param {string} graphNodeName - The node name
+     * @param {string} graphNodeName - The node name.
      * @return FQB
      */
 
