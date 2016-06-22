@@ -24,10 +24,10 @@ const fqb = new FQB()
   .graphVersion('v2.6')
   .asUrl();
 
-consolo.log(fqb.asEndpoint());
+console.log(fqb.asEndpoint());
 // /v2.6/me?access_token=user-access-token&fields=id,email
 
-consolo.log(fqb.asUrl());
+console.log(fqb.asUrl());
 // https://graph.facebook.com/v2.6/me?access_token=user-access-token&fields=id,email
 ```
 
@@ -47,10 +47,10 @@ const fqb = new FQB()
   .node('me')
   .fields(['name', photosEdge]);
 
-consolo.log(fqb.asEndpoint());
+console.log(fqb.asEndpoint());
 // /me?fields=name,photos.limit(5){id,source}
 
-consolo.log(fqb.asUrl());
+console.log(fqb.asUrl());
 // https://graph.facebook.com/me?fields=name,photos.limit(5){id,source}
 ```
 
@@ -76,10 +76,10 @@ const fqb = new FQB()
   .node('1234')
   .fields(['name', photosEdge]);
 
-consolo.log(fqb.asEndpoint());
+console.log(fqb.asEndpoint());
 // /1234?fields=name,photos.limit(10){id,source,comments.limit(2){message},likes}
 
-consolo.log(fqb.asUrl());
+console.log(fqb.asUrl());
 // https://graph.facebook.com/1234?fields=name,photos.limit(10){id,source,comments.limit(2){message},likes}
 ```
 
