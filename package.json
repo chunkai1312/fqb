@@ -1,0 +1,56 @@
+{
+  "name": "fqb",
+  "version": "1.0.0",
+  "description": "Facebook Graph API query builder for Node.js",
+  "main": "lib/fqb.js",
+  "scripts": {
+    "build": "npm run build:clean && npm run build:scripts && npm run build:min",
+    "build:clean": "rimraf dist/*",
+    "build:scripts": "browserify src/fqb.js -s FQB -t [babelify] -o dist/fqb.js",
+    "build:min": "uglifyjs dist/fqb.js --comments '/!/' -m screw_ie8=true -c screw_ie8=true,unused=false -o dist/fqb.min.js",
+    "test": "mocha --compilers js:babel-core/register",
+    "lint": "eslint src/**/*.js",
+    "prepublish": "babel src --out-dir lib --loose all"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chunkai1312/fqb.git"
+  },
+  "keywords": [
+    "fqb",
+    "facebook",
+    "fb",
+    "graph",
+    "api",
+    "query",
+    "builder"
+  ],
+  "author": "Chun-Kai Wang <chunkai1312@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chunkai1312/fqb/issues"
+  },
+  "homepage": "https://github.com/chunkai1312/fqb#readme",
+  "devDependencies": {
+    "babel-cli": "^6.10.1",
+    "babel-core": "^6.9.1",
+    "babel-eslint": "^6.0.4",
+    "babel-plugin-transform-es2015-modules-umd": "^6.8.0",
+    "babel-polyfill": "^6.9.1",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-es2015-loose": "^7.0.0",
+    "babelify": "^7.3.0",
+    "browserify": "^13.0.1",
+    "chai": "^3.5.0",
+    "eslint": "^2.13.0",
+    "eslint-config-airbnb-base": "^3.0.1",
+    "eslint-plugin-import": "^1.8.1",
+    "mocha": "^2.5.3",
+    "rimraf": "^2.5.2",
+    "uglify-js": "^2.6.3"
+  },
+  "dependencies": {
+    "create-hmac": "^1.1.4",
+    "qs": "^6.2.0"
+  }
+}
