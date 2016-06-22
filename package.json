@@ -1,7 +1,7 @@
 {
   "name": "fqb",
   "version": "1.0.0",
-  "description": "Facebook Graph API query builder for Node.js",
+  "description": "Facebook Graph API query builder for JavaScript",
   "main": "lib/fqb.js",
   "scripts": {
     "build": "npm run build:clean && npm run build:scripts && npm run build:min",
