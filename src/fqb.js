@@ -1,23 +1,23 @@
-import GraphNode from './graph_node';
-import GraphEdge from './graph_edge';
+import GraphNode from './graph_node'
+import GraphEdge from './graph_edge'
 
-const BASE_GRAPH_URL = 'https://graph.facebook.com';  // production Graph API URL
-const BASE_GRAPH_URL_BETA = 'https://graph.beta.facebook.com';  // beta tier URL of the Graph API
+const BASE_GRAPH_URL = 'https://graph.facebook.com' // production Graph API URL
+const BASE_GRAPH_URL_BETA = 'https://graph.beta.facebook.com' // beta tier URL of the Graph API
 
 class FQB {
 
-  constructor(config = {}, graphEndpoint = '') {
-    this._graphNode;  // the GraphNode we are working with
-    this._graphVersion;  // the URL prefix version of the Graph API
-    this._appSecret;  // the application secret key
-    this._enableBetaMode = false;  // a toggle to enable the beta tier of the Graph API
-    this._config = config;  // the config options sent in from the user
+  constructor (config = {}, graphEndpoint = '') {
+    this._graphNode // the GraphNode we are working with
+    this._graphVersion // the URL prefix version of the Graph API
+    this._appSecret // the application secret key
+    this._enableBetaMode = false // a toggle to enable the beta tier of the Graph API
+    this._config = config // the config options sent in from the user
 
-    this._graphNode = new GraphNode(graphEndpoint);
-    if (config.hasOwnProperty('accessToken')) this.accessToken(config.accessToken);
-    if (config.hasOwnProperty('graphVersion')) this.graphVersion(config.graphVersion);
-    if (config.hasOwnProperty('appSecret')) this._appSecret = config.appSecret;
-    if (config.hasOwnProperty('enableBetaMode') && config.enableBetaMode === true) this._enableBetaMode = true;
+    this._graphNode = new GraphNode(graphEndpoint)
+    if (config.hasOwnProperty('accessToken')) this.accessToken(config.accessToken)
+    if (config.hasOwnProperty('graphVersion')) this.graphVersion(config.graphVersion)
+    if (config.hasOwnProperty('appSecret')) this._appSecret = config.appSecret
+    if (config.hasOwnProperty('enableBetaMode') && config.enableBetaMode === true) this._enableBetaMode = true
   }
 
   /**
@@ -26,8 +26,8 @@ class FQB {
    * @param {string} graphNodeName - The node name.
    * @return FQB
    */
-  node(graphNodeName) {
-    return new FQB(this._config, graphNodeName);
+  node (graphNodeName) {
+    return new FQB(this._config, graphNodeName)
   }
 
   /**
@@ -37,8 +37,8 @@ class FQB {
    * @param {Array}  fields - The fields we want on the edge.
    * @return GraphEdge
    */
-  edge(edgeName, fields) {
-    return new GraphEdge(edgeName, fields);
+  edge (edgeName, fields) {
+    return new GraphEdge(edgeName, fields)
   }
 
   /**
@@ -47,10 +47,10 @@ class FQB {
    * @param {(Array|string)} fields
    * @return FQB
    */
-  fields(...fields) {
-    if (fields.length === 1 && Array.isArray(fields[0])) this._graphNode.fields(fields[0]);
-    else this._graphNode.fields(fields);
-    return this;
+  fields (...fields) {
+    if (fields.length === 1 && Array.isArray(fields[0])) this._graphNode.fields(fields[0])
+    else this._graphNode.fields(fields)
+    return this
   }
 
   /**
@@ -59,9 +59,9 @@ class FQB {
    * @param {string} accessToken - The access token to overwrite the default.
    * @return FQB
    */
-  accessToken(accessToken) {
-    this._graphNode.modifiers(Object.assign(this._graphNode._modifiers, { access_token: accessToken }));
-    return this;
+  accessToken (accessToken) {
+    this._graphNode.modifiers(Object.assign(this._graphNode._modifiers, { access_token: accessToken }))
+    return this
   }
 
   /**
@@ -70,9 +70,9 @@ class FQB {
    * @param {string} graphVersion - The access token to overwrite the default.
    * @return FQB
    */
-  graphVersion(graphVersion) {
-    this._graphVersion = graphVersion;
-    return this;
+  graphVersion (graphVersion) {
+    this._graphVersion = graphVersion
+    return this
   }
 
   /**
@@ -81,9 +81,9 @@ class FQB {
    * @param {number} limit
    * @return FQB
    */
-  limit(limit) {
-    this._graphNode.limit(limit);
-    return this;
+  limit (limit) {
+    this._graphNode.limit(limit)
+    return this
   }
 
   /**
@@ -93,9 +93,9 @@ class FQB {
    *
    * @return FQB
    */
-  modifiers(data) {
-    this._graphNode.modifiers(data);
-    return this;
+  modifiers (data) {
+    this._graphNode.modifiers(data)
+    return this
   }
 
   /**
@@ -103,8 +103,8 @@ class FQB {
    *
    * @return {string}
    */
-  asUrl() {
-    return `${this.getHostname()}${this.asEndpoint()}`;
+  asUrl () {
+    return `${this.getHostname()}${this.asEndpoint()}`
   }
 
   /**
@@ -112,10 +112,10 @@ class FQB {
    *
    * @return {string}
    */
-  asEndpoint() {
-    let graphVersionPrefix = '';
-    if (this._graphVersion) graphVersionPrefix = `/${this._graphVersion}`;
-    return `${graphVersionPrefix}${this._graphNode.asUrl(this._appSecret)}`;
+  asEndpoint () {
+    let graphVersionPrefix = ''
+    if (this._graphVersion) graphVersionPrefix = `/${this._graphVersion}`
+    return `${graphVersionPrefix}${this._graphNode.asUrl(this._appSecret)}`
   }
 
   /**
@@ -123,12 +123,12 @@ class FQB {
    *
    * @return {string}
    */
-  getHostname() {
+  getHostname () {
     return (this._enableBetaMode)
       ? BASE_GRAPH_URL_BETA
-      : BASE_GRAPH_URL;
+      : BASE_GRAPH_URL
   }
 
 }
 
-module.exports = FQB;
+module.exports = FQB

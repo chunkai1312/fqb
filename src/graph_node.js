@@ -1,10 +1,10 @@
-import createHmac from 'create-hmac';
-import qs from 'qs';
+import createHmac from 'create-hmac'
+import qs from 'qs'
 
-const PARAM_FIELDS = 'fields';  // the name of the fields param
-const PARAM_LIMIT = 'limit';  // the name of the limit param
-const PARAM_ACCESS_TOKEN = 'access_token';  // the name of the access token param
-const PARAM_APP_SECRET_PROOF = 'appsecret_proof';  // the name of the app secret proof param
+const PARAM_FIELDS = 'fields' // the name of the fields param
+const PARAM_LIMIT = 'limit' // the name of the limit param
+const PARAM_ACCESS_TOKEN = 'access_token' // the name of the access token param
+const PARAM_APP_SECRET_PROOF = 'appsecret_proof' // the name of the app secret proof param
 
 class GraphNode {
 
@@ -15,12 +15,12 @@ class GraphNode {
    * @param {Array}  fields
    * @param {number} limit
    */
-  constructor(name, fields = [], limit = 0) {
-    this._name = name;  // the name of the node
-    this._modifiers = {};  // the modifiers that will be appended to the node
-    this._fields = fields;  // the fields & GraphEdge's that we want to request
-    this._compiledValues = [];  // compiled values that are ready to be concatenated
-    if (limit) this.limit(limit);
+  constructor (name, fields = [], limit = 0) {
+    this._name = name // the name of the node
+    this._modifiers = {} // the modifiers that will be appended to the node
+    this._fields = fields // the fields & GraphEdge's that we want to request
+    this._compiledValues = [] // compiled values that are ready to be concatenated
+    if (limit) this.limit(limit)
   }
 
   /**
@@ -29,9 +29,9 @@ class GraphNode {
    * @param {Array} data
    * @return GraphNode
    */
-  modifiers(data) {
-    Object.assign(this._modifiers, data);
-    return this;
+  modifiers (data) {
+    Object.assign(this._modifiers, data)
+    return this
   }
 
   /**
@@ -39,8 +39,8 @@ class GraphNode {
    *
    * @return {Array}
    */
-  getModifiers() {
-    return this._modifiers;
+  getModifiers () {
+    return this._modifiers
   }
 
   /**
@@ -49,8 +49,8 @@ class GraphNode {
    * @param {string} key
    * @return {(Mixed|null)}
    */
-  getModifier(key) {
-    return this._modifiers[key] ? this._modifiers[key] : null;
+  getModifier (key) {
+    return this._modifiers[key] ? this._modifiers[key] : null
   }
 
   /**
@@ -59,9 +59,9 @@ class GraphNode {
    * @param {number} limit
    * @return GraphNode
    */
-  limit(limit) {
-    this._modifiers[PARAM_LIMIT] = limit;
-    return this;
+  limit (limit) {
+    this._modifiers[PARAM_LIMIT] = limit
+    return this
   }
 
   /**
@@ -69,8 +69,8 @@ class GraphNode {
    *
    * @return {(number|null)}
    */
-  getLimit() {
-    return this._modifiers[PARAM_LIMIT];
+  getLimit () {
+    return this._modifiers[PARAM_LIMIT]
   }
 
   /**
@@ -80,11 +80,11 @@ class GraphNode {
    *
    * @return GraphNode
    */
-  fields(...fields) {
+  fields (...fields) {
     this._fields = (fields.length === 1 && Array.isArray(fields[0]))
       ? this._fields.concat(fields[0])
-      : this._fields.concat(fields);
-    return this;
+      : this._fields.concat(fields)
+    return this
   }
 
   /**
@@ -92,31 +92,31 @@ class GraphNode {
    *
    * @return {Array}
    */
-  getFields() {
-    return this._fields;
+  getFields () {
+    return this._fields
   }
 
   /**
    * Clear the compiled values.
    */
-  resetCompiledValues() {
-    this._compiledValues = [];
+  resetCompiledValues () {
+    this._compiledValues = []
   }
 
   /**
    * Compile the modifier values.
    */
-  compileModifiers() {
-    if (!Object.keys(this._modifiers).length) return;
-    this._compiledValues = qs.stringify(this._modifiers).split('&');
+  compileModifiers () {
+    if (!Object.keys(this._modifiers).length) return
+    this._compiledValues = qs.stringify(this._modifiers).split('&')
   }
 
   /**
    * Compile the field values.
    */
-  compileFields() {
-    if (!this._fields.length) return;
-    this._compiledValues.push(`${PARAM_FIELDS}=${this._fields.join()}`);
+  compileFields () {
+    if (!this._fields.length) return
+    this._compiledValues.push(`${PARAM_FIELDS}=${this._fields.join()}`)
   }
 
   /**
@@ -124,10 +124,10 @@ class GraphNode {
    *
    * @return {string}
    */
-  compileUrl() {
-    let append = '';
-    if (this._compiledValues.length) append = `?${this._compiledValues.join('&')}`;
-    return `/${this._name}${append}`;
+  compileUrl () {
+    let append = ''
+    if (this._compiledValues.length) append = `?${this._compiledValues.join('&')}`
+    return `/${this._name}${append}`
   }
 
   /**
@@ -136,12 +136,12 @@ class GraphNode {
    * @param {(string|null)} appSecret - The app secret for signing the URL with app secret proof.
    * @return {string}
    */
-  asUrl(appSecret = null) {
-    this.resetCompiledValues();
-    if (appSecret) this.addAppSecretProofModifier(appSecret);
-    this.compileModifiers();
-    this.compileFields();
-    return this.compileUrl();
+  asUrl (appSecret = null) {
+    this.resetCompiledValues()
+    if (appSecret) this.addAppSecretProofModifier(appSecret)
+    this.compileModifiers()
+    this.compileFields()
+    return this.compileUrl()
   }
 
   /**
@@ -150,8 +150,8 @@ class GraphNode {
    * @param {(string|null)} appSecret - The app secret for signing the URL with app secret proof.
    * @return {string}
    */
-  toString() {
-    return this.asUrl();
+  toString () {
+    return this.asUrl()
   }
 
   /**
@@ -159,12 +159,12 @@ class GraphNode {
    *
    * @param {string} appSecret
    */
-  addAppSecretProofModifier(appSecret) {
-    const accessToken = this.getModifier(PARAM_ACCESS_TOKEN);
-    if (!accessToken) return;
-    this._modifiers[PARAM_APP_SECRET_PROOF] = createHmac('sha256', appSecret).update(accessToken).digest('hex');
+  addAppSecretProofModifier (appSecret) {
+    const accessToken = this.getModifier(PARAM_ACCESS_TOKEN)
+    if (!accessToken) return
+    this._modifiers[PARAM_APP_SECRET_PROOF] = createHmac('sha256', appSecret).update(accessToken).digest('hex')
   }
 
 }
 
-module.exports = GraphNode;
+module.exports = GraphNode
