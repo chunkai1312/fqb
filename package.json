@@ -4,13 +4,14 @@
   "description": "Facebook Graph API query builder for JavaScript",
   "main": "lib/fqb.js",
   "scripts": {
-    "build": "npm run build:clean && npm run build:scripts && npm run build:min",
-    "build:clean": "rimraf dist/*",
-    "build:scripts": "browserify src/fqb.js -s FQB -t [babelify] -o dist/fqb.js",
-    "build:min": "uglifyjs dist/fqb.js --comments '/!/' -m screw_ie8=true -c screw_ie8=true,unused=false -o dist/fqb.min.js",
+    "build": "npm run build:clean && npm run build:babel && npm run build:browserify && npm run build:uglify",
+    "build:clean": "rimraf lib/* dist/*",
+    "build:babel": "babel src -d lib",
+    "build:browserify": "browserify src/fqb.js -s FQB -t [babelify] -o dist/fqb.js",
+    "build:uglify": "uglifyjs dist/fqb.js --comments '/!/' -m screw_ie8=true -c screw_ie8=true,unused=false -o dist/fqb.min.js",
     "test": "mocha --compilers js:babel-core/register",
-    "lint": "eslint src/**/*.js",
-    "prepublish": "babel src --out-dir lib --loose all"
+    "lint": "eslint src test",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
