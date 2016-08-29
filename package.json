@@ -1,6 +1,6 @@
 {
   "name": "fqb",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Facebook Graph API query builder for JavaScript",
   "main": "index.js",
   "scripts": {
@@ -9,9 +9,9 @@
     "build:babel": "babel src -d lib",
     "build:browserify": "browserify src/fqb.js -s FQB -t [babelify] -o dist/fqb.js",
     "build:uglify": "uglifyjs dist/fqb.js --comments '/!/' -m screw_ie8=true -c screw_ie8=true,unused=false -o dist/fqb.min.js",
-    "test": "mocha --compilers js:babel-core/register",
     "lint": "eslint src test",
-    "prepublish": "npm run build"
+    "test": "mocha --compilers js:babel-core/register",
+    "prepublish": "npm run lint && npm test"
   },
   "repository": {
     "type": "git",
