@@ -2,6 +2,8 @@
 
 > Facebook Graph API query builder for JavaScript
 
+[![JavaScript Style Guide](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
+
 ## Install
 
 ```shell
@@ -21,7 +23,7 @@ Add a `<script>` to your `index.html`:
 Import the module to your `*.js` file:
 
 ```js
-const FQB = require('fqb');
+const FQB = require('fqb')
 ```
 
 ## Usage
@@ -35,12 +37,12 @@ const fqb = new FQB()
   .node('me')
   .fields(['id', 'email'])
   .accessToken('user-access-token')
-  .graphVersion('v2.6');
+  .graphVersion('v2.6')
 
-console.log(fqb.asEndpoint());
+console.log(fqb.asEndpoint())
 // /v2.6/me?access_token=user-access-token&fields=id,email
 
-console.log(fqb.asUrl());
+console.log(fqb.asUrl())
 // https://graph.facebook.com/v2.6/me?access_token=user-access-token&fields=id,email
 ```
 
@@ -52,16 +54,16 @@ The following example will get the logged in user's name & first 5 photos they a
 const photosEdge = new FQB()
   .edge('photos')
   .fields(['id', 'source'])
-  .limit(5);
+  .limit(5)
 
 const fqb = new FQB()
   .node('me')
-  .fields(['name', photosEdge]);
+  .fields(['name', photosEdge])
 
-console.log(fqb.asEndpoint());
+console.log(fqb.asEndpoint())
 // /me?fields=name,photos.limit(5){id,source}
 
-console.log(fqb.asUrl());
+console.log(fqb.asUrl())
 // https://graph.facebook.com/me?fields=name,photos.limit(5){id,source}
 ```
 
@@ -69,26 +71,26 @@ The following example will get user `1234`'s name, and first 10 photos they are 
 
 ```js
 const likesEdge = new FQB()
-  .edge('likes');
+  .edge('likes')
 
 const commentsEdge = new FQB()
   .edge('comments')
   .fields('message')
-  .limit(2);
+  .limit(2)
 
 const photosEdge = new FQB()
   .edge('photos')
   .fields(['id', 'source', commentsEdge, likesEdge])
-  .limit(10);
+  .limit(10)
 
 const fqb = new FQB()
   .node('1234')
-  .fields(['name', photosEdge]);
+  .fields(['name', photosEdge])
 
-console.log(fqb.asEndpoint());
+console.log(fqb.asEndpoint())
 // /1234?fields=name,photos.limit(10){id,source,comments.limit(2){message},likes}
 
-console.log(fqb.asUrl());
+console.log(fqb.asUrl())
 // https://graph.facebook.com/1234?fields=name,photos.limit(10){id,source,comments.limit(2){message},likes}
 ```
 
@@ -98,7 +100,7 @@ console.log(fqb.asUrl());
 $ npm test
 ```
 
-## Inspiration
+## Note
 
 Inspired by [FacebookQueryBuilder](https://github.com/SammyK/FacebookQueryBuilder)
 
@@ -110,7 +112,7 @@ Facebook's [Graph API](https://developers.facebook.com/docs/graph-api)
 
 MIT © [Chun-Kai Wang](https://github.com/chunkai1312)
 
-[npm-image]: https://badge.fury.io/js/fqb.svg
+[npm-image]: https://img.shields.io/npm/v/fqb.svg
 [npm-url]: https://npmjs.org/package/fqb
 [travis-image]: https://travis-ci.org/chunkai1312/fqb.svg?branch=master
 [travis-url]: https://travis-ci.org/chunkai1312/fqb

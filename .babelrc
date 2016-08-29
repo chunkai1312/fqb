@@ -1,4 +1,4 @@
 {
-  "presets": ["es2015-loose"],
-  "plugins": ["transform-es2015-modules-umd"]
+  "presets": ["es2015"],
+  "plugins": ["add-module-exports"]
 }

@@ -1,4 +1,4 @@
-import GraphNode from './graph_node';
+import GraphNode from './graph_node'
 
 class GraphEdge extends GraphNode {
 
@@ -7,15 +7,15 @@ class GraphEdge extends GraphNode {
    *
    * @return {Array}
    */
-  toEndpoints() {
-    const endpoints = [];
+  toEndpoints () {
+    const endpoints = []
 
-    const children = this.getChildEdges();
+    const children = this.getChildEdges()
     children.forEach(child => {
-      endpoints.push(`/${child.join('/')}`);
-    });
+      endpoints.push(`/${child.join('/')}`)
+    })
 
-    return endpoints;
+    return endpoints
   }
 
   /**
@@ -23,60 +23,60 @@ class GraphEdge extends GraphNode {
    *
    * @return {Array}
    */
-  getChildEdges() {
-    const edges = [];
-    let hasChildren = false;
+  getChildEdges () {
+    const edges = []
+    let hasChildren = false
 
     this._fields.forEach(field => {
       if (field instanceof GraphEdge) {
-        hasChildren = true;
+        hasChildren = true
 
-        const children = field.getChildEdges();
+        const children = field.getChildEdges()
         children.forEach(childEdges => {
-          edges.push([this._name].concat(childEdges));
-        });
+          edges.push([this._name].concat(childEdges))
+        })
       }
-    });
+    })
 
     if (!hasChildren) {
-      edges.push([this._name]);
+      edges.push([this._name])
     }
 
-    return edges;
+    return edges
   }
 
   /**
    * Compile the modifier values.
    */
-  compileModifiers() {
-    if (!Object.keys(this._modifiers).length) return;
+  compileModifiers () {
+    if (!Object.keys(this._modifiers).length) return
 
-    const processedModifiers = [];
+    const processedModifiers = []
 
     Object.keys(this._modifiers).forEach(prop => {
       processedModifiers.push(
         `${encodeURIComponent(prop)}(${encodeURIComponent(this._modifiers[prop])})`
-      );
-    });
+      )
+    })
 
-    this._compiledValues.push(`.${processedModifiers.join('.')}`);
+    this._compiledValues.push(`.${processedModifiers.join('.')}`)
   }
 
   /**
    * Compile the field values.
    */
-  compileFields() {
-    if (!this._fields.length) return;
+  compileFields () {
+    if (!this._fields.length) return
 
-    const processedFields = [];
+    const processedFields = []
 
     this._fields.forEach(field => {
       processedFields.push(
         (field instanceof GraphEdge) ? field.asUrl() : encodeURIComponent(field)
-      );
-    });
+      )
+    })
 
-    this._compiledValues.push(`{${processedFields.join(',')}}`);
+    this._compiledValues.push(`{${processedFields.join(',')}}`)
   }
 
   /**
@@ -84,12 +84,12 @@ class GraphEdge extends GraphNode {
    *
    * @return {string}
    */
-  compileUrl() {
-    let append = '';
-    if (this._compiledValues.length) append = this._compiledValues.join('');
-    return this._name + append;
+  compileUrl () {
+    let append = ''
+    if (this._compiledValues.length) append = this._compiledValues.join('')
+    return this._name + append
   }
 
 }
 
-module.exports = GraphEdge;
+export default GraphEdge
