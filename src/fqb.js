@@ -131,4 +131,4 @@ class FQB {
 
 }
 
-module.exports = FQB
+export default FQB

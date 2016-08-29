@@ -92,4 +92,4 @@ class GraphEdge extends GraphNode {
 
 }
 
-module.exports = GraphEdge
+export default GraphEdge
