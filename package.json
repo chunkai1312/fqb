@@ -10,7 +10,7 @@
     "build:browserify": "browserify src/fqb.js -s FQB -t [babelify] -o dist/fqb.js",
     "build:uglify": "uglifyjs dist/fqb.js --comments '/!/' -m screw_ie8=true -c screw_ie8=true,unused=false -o dist/fqb.min.js",
     "lint": "eslint src test",
-    "test": "mocha --compilers js:babel-core/register",
+    "test": "mocha",
     "prepublish": "npm run lint && npm test"
   },
   "repository": {
