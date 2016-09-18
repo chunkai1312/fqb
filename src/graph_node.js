@@ -1,12 +1,12 @@
 import createHmac from 'create-hmac'
 import qs from 'qs'
 
-const PARAM_FIELDS = 'fields' // the name of the fields param
-const PARAM_LIMIT = 'limit' // the name of the limit param
-const PARAM_ACCESS_TOKEN = 'access_token' // the name of the access token param
-const PARAM_APP_SECRET_PROOF = 'appsecret_proof' // the name of the app secret proof param
-
 class GraphNode {
+
+  static PARAM_FIELDS = 'fields'                     // the name of the fields param
+  static PARAM_LIMIT = 'limit'                       // the name of the limit param
+  static PARAM_ACCESS_TOKEN = 'access_token'         // the name of the access token param
+  static PARAM_APP_SECRET_PROOF = 'appsecret_proof'  // the name of the app secret proof param
 
   /**
    * Create a new GraphNode value object.
@@ -16,10 +16,10 @@ class GraphNode {
    * @param {number} limit
    */
   constructor (name, fields = [], limit = 0) {
-    this._name = name // the name of the node
-    this._modifiers = {} // the modifiers that will be appended to the node
-    this._fields = fields // the fields & GraphEdge's that we want to request
-    this._compiledValues = [] // compiled values that are ready to be concatenated
+    this._name = name             // the name of the node
+    this._modifiers = {}          // the modifiers that will be appended to the node
+    this._fields = fields         // the fields & GraphEdge's that we want to request
+    this._compiledValues = []     // compiled values that are ready to be concatenated
     if (limit) this.limit(limit)
   }
 
@@ -60,7 +60,7 @@ class GraphNode {
    * @return GraphNode
    */
   limit (limit) {
-    this._modifiers[PARAM_LIMIT] = limit
+    this._modifiers[GraphNode.PARAM_LIMIT] = limit
     return this
   }
 
@@ -70,7 +70,7 @@ class GraphNode {
    * @return {(number|null)}
    */
   getLimit () {
-    return this._modifiers[PARAM_LIMIT]
+    return this._modifiers[GraphNode.PARAM_LIMIT]
   }
 
   /**
@@ -116,7 +116,7 @@ class GraphNode {
    */
   compileFields () {
     if (!this._fields.length) return
-    this._compiledValues.push(`${PARAM_FIELDS}=${this._fields.join()}`)
+    this._compiledValues.push(`${GraphNode.PARAM_FIELDS}=${this._fields.join()}`)
   }
 
   /**
@@ -160,9 +160,9 @@ class GraphNode {
    * @param {string} appSecret
    */
   addAppSecretProofModifier (appSecret) {
-    const accessToken = this.getModifier(PARAM_ACCESS_TOKEN)
+    const accessToken = this.getModifier(GraphNode.PARAM_ACCESS_TOKEN)
     if (!accessToken) return
-    this._modifiers[PARAM_APP_SECRET_PROOF] = createHmac('sha256', appSecret).update(accessToken).digest('hex')
+    this._modifiers[GraphNode.PARAM_APP_SECRET_PROOF] = createHmac('sha256', appSecret).update(accessToken).digest('hex')
   }
 
 }

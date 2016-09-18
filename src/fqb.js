@@ -1,17 +1,17 @@
 import GraphNode from './graph_node'
 import GraphEdge from './graph_edge'
 
-const BASE_GRAPH_URL = 'https://graph.facebook.com' // production Graph API URL
-const BASE_GRAPH_URL_BETA = 'https://graph.beta.facebook.com' // beta tier URL of the Graph API
-
 class FQB {
 
+  static BASE_GRAPH_URL = 'https://graph.facebook.com'            // production Graph API URL
+  static BASE_GRAPH_URL_BETA = 'https://graph.beta.facebook.com'  // beta tier URL of the Graph API
+
   constructor (config = {}, graphEndpoint = '') {
-    this._graphNode // the GraphNode we are working with
-    this._graphVersion // the URL prefix version of the Graph API
-    this._appSecret // the application secret key
-    this._enableBetaMode = false // a toggle to enable the beta tier of the Graph API
-    this._config = config // the config options sent in from the user
+    this._graphNode               // the GraphNode we are working with
+    this._graphVersion            // the URL prefix version of the Graph API
+    this._appSecret               // the application secret key
+    this._enableBetaMode = false  // a toggle to enable the beta tier of the Graph API
+    this._config = config         // the config options sent in from the user
 
     this._graphNode = new GraphNode(graphEndpoint)
     if (config.hasOwnProperty('accessToken')) this.accessToken(config.accessToken)
@@ -125,8 +125,8 @@ class FQB {
    */
   getHostname () {
     return (this._enableBetaMode)
-      ? BASE_GRAPH_URL_BETA
-      : BASE_GRAPH_URL
+      ? FQB.BASE_GRAPH_URL_BETA
+      : FQB.BASE_GRAPH_URL
   }
 
 }
