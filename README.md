@@ -2,7 +2,35 @@
 
 > Facebook Graph API query builder for JavaScript
 
-[![JavaScript Style Guide](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
+A query builder that helps you simply make [nested requests](https://developers.facebook.com/docs/graph-api/using-graph-api#fieldexpansion) to Facebook's [Graph API](https://developers.facebook.com/docs/graph-api) for fetching specific data that you want.
+
+## Introduction
+
+About Facebook's Graph API, there are [three concepts](https://developers.facebook.com/docs/graph-api/quickstart#basics) you should know:
+
+1. **Node**: A node represents a "real-world thing" on Facebook, such as a user, a photo, a page, a comment.
+2. **Edge**: An edge is the connection between two or more nodes, such as a page's photos, or a photo's comments.
+3. **Field**: A Field is a property of the node. such as a user's birthday, or the name of a page.
+
+We follow the same concepts to help you generate request URLs. For example, when you send a request to the Facebook's Graph API, the URL looks like as following:
+
+```
+https://graph.facebook.com/node-id/edge-name?fields=field-name
+```
+
+To generate the same URL with fqb, you'd do the following:
+
+```js
+const edge = new FQB().edge('edge-name').fields('field-name')
+const fqb = new FQB().node('node-id').fields(edge)
+
+console.log(fqb.asUrl())
+// https://graph.facebook.com/node-id?fields=edge-name{field-name}
+```
+
+The output looks a little different, but two URL's are functionally identical with the exception of how the Graph API returns the response data. What makes the URL generated with fqb different is that it is being expressed as a nested request.
+
+Making nested request allows you to effectively nest multiple graph queries into a single call. With fqb, you can make it easy to generate properly formatted nested requests from a fluent, easy-to-read JavaScript interface.
 
 ## Install
 
