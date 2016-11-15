@@ -119,6 +119,15 @@ class FQB {
   }
 
   /**
+   * Returns the Graph URL as nicely formatted string.
+   *
+   * @return {string}
+   */
+  toString () {
+    return this.asUrl()
+  }
+
+  /**
    * Returns the Graph API hostname.
    *
    * @return {string}
@@ -131,4 +140,4 @@ class FQB {
 
 }
 
-export default FQB
+export default function (...args) { return new FQB(...args) }
