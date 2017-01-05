@@ -1,5 +1,9 @@
 # fqb changelog
 
+## 1.1.1 / 2017-01-06
+
+- Add test coverage
+
 ## 1.1.0 / 2016-08-29
 
 - Refactor and use [JavaScript Standard Style](http://standardjs.com/)
