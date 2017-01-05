@@ -140,4 +140,4 @@ class FQB {
 
 }
 
-export default function (...args) { return new FQB(...args) }
+export default FQB
