@@ -47,6 +47,7 @@ describe('GraphNode', () => {
     it('should get set properly', () => {
       const node = new GraphNode('foo')
       node.limit(5)
+      expect(node.getLimit()).to.equal(5)
       expect(node.toString()).to.equal('/foo?limit=5')
     })
   })

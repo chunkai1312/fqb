@@ -23,6 +23,7 @@ describe('FQB', () => {
       expect(fqb._graphNode).to.be.an.instanceof(GraphNode)
       expect(fqb.asEndpoint()).to.equal('/v2.0/node')
       expect(fqb.asUrl()).to.equal('https://graph.facebook.com/v2.0/node')
+      expect(fqb.toString()).to.equal(fqb.asUrl())
     })
 
     it('should be enable beta mode to return the beta hostname', () => {
@@ -32,6 +33,7 @@ describe('FQB', () => {
       expect(fqb._graphNode).to.be.an.instanceof(GraphNode)
       expect(fqb.asEndpoint()).to.equal('/v2.0/node')
       expect(fqb.asUrl()).to.equal('https://graph.beta.facebook.com/v2.0/node')
+      expect(fqb.toString()).to.equal(fqb.asUrl())
     })
 
     it('should be generated when an app secret is provided an app secret proof', () => {
