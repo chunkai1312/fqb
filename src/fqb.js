@@ -108,7 +108,7 @@ class FQB {
   }
 
   /**
-   * Returns the Graph URL as nicely formatted string.
+   * Return the generated request as a URL endpoint sans the hostname.
    *
    * @return {string}
    */
