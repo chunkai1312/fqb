@@ -1,4 +1,4 @@
-# fqb [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url]
+# fqb [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Test coverage][codecov-image]][codecov-url]
 
 > Facebook Graph API query builder for JavaScript
 
@@ -122,12 +122,6 @@ console.log(fqb.asUrl())
 // https://graph.facebook.com/1234?fields=name,photos.limit(10){id,source,comments.limit(2){message},likes}
 ```
 
-## Test
-
-```
-$ npm test
-```
-
 ## Note
 
 Inspired by [FacebookQueryBuilder](https://github.com/SammyK/FacebookQueryBuilder)
@@ -144,3 +138,5 @@ MIT © [Chun-Kai Wang](https://github.com/chunkai1312)
 [npm-url]: https://npmjs.org/package/fqb
 [travis-image]: https://travis-ci.org/chunkai1312/fqb.svg?branch=master
 [travis-url]: https://travis-ci.org/chunkai1312/fqb
+[codecov-image]: https://codecov.io/gh/chunkai1312/fqb/branch/master/graph/badge.svg
+[codecov-url]: https://codecov.io/gh/chunkai1312/fqb
