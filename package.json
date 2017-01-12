@@ -9,7 +9,7 @@
     "build:babel": "babel src -d lib",
     "build:browserify": "browserify src/fqb.js -s FQB -t [babelify] -o dist/fqb.js",
     "build:uglify": "uglifyjs dist/fqb.js --comments '/!/' -m screw_ie8=true -c screw_ie8=true,unused=false -o dist/fqb.min.js",
-    "test": "cross-env NODE_ENV=test nyc mocha --compilers js:babel-core/register test/**/*.test.js",
+    "test": "cross-env NODE_ENV=test nyc --reporter=text-summary mocha --compilers js:babel-core/register test/**/*.test.js",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "lint": "eslint src test"
   },
