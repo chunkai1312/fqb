@@ -1,4 +1,8 @@
-# fqb [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Test coverage][codecov-image]][codecov-url]
+# fqb
+
+[![NPM version][npm-image]][npm-url]
+[![Build Status][travis-image]][travis-url]
+[![Coverage Status][codecov-image]][codecov-url]
 
 > Facebook Graph API query builder for JavaScript
 
@@ -136,7 +140,7 @@ MIT © [Chun-Kai Wang](https://github.com/chunkai1312)
 
 [npm-image]: https://img.shields.io/npm/v/fqb.svg
 [npm-url]: https://npmjs.org/package/fqb
-[travis-image]: https://travis-ci.org/chunkai1312/fqb.svg?branch=master
+[travis-image]: https://img.shields.io/travis/chunkai1312/fqb.svg
 [travis-url]: https://travis-ci.org/chunkai1312/fqb
-[codecov-image]: https://codecov.io/gh/chunkai1312/fqb/branch/master/graph/badge.svg
+[codecov-image]: https://img.shields.io/codecov/c/github/chunkai1312/fqb.svg
 [codecov-url]: https://codecov.io/gh/chunkai1312/fqb
