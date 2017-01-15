@@ -2,6 +2,7 @@
 
 ## 1.1.2 / 2017-01-15
 
+- Require node v4 and higher
 - Rebuild to fix dependencies
 
 ## 1.1.1 / 2017-01-06
