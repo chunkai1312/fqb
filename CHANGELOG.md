@@ -1,5 +1,9 @@
 # fqb changelog
 
+## 1.1.2 / 2017-01-15
+
+- Rebuild to fix dependencies
+
 ## 1.1.1 / 2017-01-06
 
 - Add test coverage
