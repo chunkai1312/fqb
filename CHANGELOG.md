@@ -1,5 +1,9 @@
 # fqb changelog
 
+## 1.1.3 / 2017-01-15
+
+- Update dependencies
+
 ## 1.1.2 / 2017-01-15
 
 - Require node v4 and higher
