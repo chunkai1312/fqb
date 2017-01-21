@@ -1,6 +1,6 @@
 {
   "name": "fqb",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "Facebook Graph API query builder for JavaScript",
   "main": "index.js",
   "scripts": {
@@ -9,10 +9,15 @@
     "build:babel": "babel src -d lib",
     "build:browserify": "browserify src/fqb.js -s FQB -t [babelify] -o dist/fqb.js",
     "build:uglify": "uglifyjs dist/fqb.js --comments '/!/' -m screw_ie8=true -c screw_ie8=true,unused=false -o dist/fqb.min.js",
-    "test": "cross-env NODE_ENV=test nyc --reporter=text-summary mocha --compilers js:babel-core/register test/**/*.test.js",
+    "test": "cross-env NODE_ENV=test nyc --reporter=text-summary mocha --compilers js:babel-register test/**/*.test.js",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "lint": "eslint src test"
   },
+  "files": [
+    "index.js",
+    "lib",
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/chunkai1312/fqb.git"
@@ -38,13 +43,12 @@
   },
   "devDependencies": {
     "babel-cli": "^6.14.0",
-    "babel-core": "^6.14.0",
     "babel-eslint": "^6.1.2",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-istanbul": "^3.1.2",
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-stage-0": "^6.5.0",
-    "babel-register": "^6.18.0",
+    "babel-register": "^6.22.0",
     "babelify": "^7.3.0",
     "browserify": "^13.1.0",
     "chai": "^3.5.0",
