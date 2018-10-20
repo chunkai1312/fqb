@@ -126,6 +126,32 @@ console.log(fqb.asUrl())
 // https://graph.facebook.com/1234?fields=name,photos.limit(10){id,source,comments.limit(2){message},likes}
 ```
 
+### Use other methods of Graph API
+
+You can use `modifiers` to use some methods of Graph API. The methods are such as `sort` (`modifiers({ sort: 'name' })`), `filtering` (The following example), `summary` (`modifiers({ summary: JSON.stringify(['clicks', 'likes']) })`) ...
+
+The following example will get photos filtering by ids.
+
+```js
+const filterings = [{ field: 'id', operator: 'IN', value: ['1234', '5678'] }]
+const modifiers = { filtering: JSON.stringify(filterings) }
+const photosEdge = new FQB()
+  .edge('photos')
+  .fields(['id', 'source'])
+  .limit(5)
+  .modifiers(modifiers)
+
+const fqb = new FQB()
+  .node('me')
+  .fields(['name', photosEdge])
+
+console.log(fqb.asEndpoint())
+// /me?fields=name,photos.limit(5).filtering([{"field":"id","opertator":"IN","value":["1234","5678"]}]){id,source}
+
+console.log(fqb.asUrl())
+// https://graph.facebook.com/me?fields=name,photos.limit(5).filtering([{"field":"id","opertator":"IN","value":["1234","5678"]}]){id,source}
+```
+
 ## Note
 
 Inspired by [FacebookQueryBuilder](https://github.com/SammyK/FacebookQueryBuilder)
