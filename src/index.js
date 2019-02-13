@@ -1,3 +1,1 @@
-import FQB from './fqb'
-
-export default FQB
+export { default } from './fqb'

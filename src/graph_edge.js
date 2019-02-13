@@ -1,7 +1,6 @@
 import GraphNode from './graph_node'
 
 class GraphEdge extends GraphNode {
-
   /**
    * Convert the nested query into an array of endpoints.
    *
@@ -89,7 +88,6 @@ class GraphEdge extends GraphNode {
     if (this._compiledValues.length) append = this._compiledValues.join('')
     return this._name + append
   }
-
 }
 
 export default GraphEdge

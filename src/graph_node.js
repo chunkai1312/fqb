@@ -2,11 +2,10 @@ import createHmac from 'create-hmac'
 import qs from 'qs'
 
 class GraphNode {
-
-  static PARAM_FIELDS = 'fields'                     // the name of the fields param
-  static PARAM_LIMIT = 'limit'                       // the name of the limit param
-  static PARAM_ACCESS_TOKEN = 'access_token'         // the name of the access token param
-  static PARAM_APP_SECRET_PROOF = 'appsecret_proof'  // the name of the app secret proof param
+  static PARAM_FIELDS = 'fields' // the name of the fields param
+  static PARAM_LIMIT = 'limit' // the name of the limit param
+  static PARAM_ACCESS_TOKEN = 'access_token' // the name of the access token param
+  static PARAM_APP_SECRET_PROOF = 'appsecret_proof' // the name of the app secret proof param
 
   /**
    * Create a new GraphNode value object.
@@ -16,17 +15,17 @@ class GraphNode {
    * @param {number} limit
    */
   constructor (name, fields = [], limit = 0) {
-    this._name = name             // the name of the node
-    this._modifiers = {}          // the modifiers that will be appended to the node
-    this._fields = fields         // the fields & GraphEdge's that we want to request
-    this._compiledValues = []     // compiled values that are ready to be concatenated
+    this._name = name // the name of the node
+    this._modifiers = {} // the modifiers that will be appended to the node
+    this._fields = fields // the fields & GraphEdge's that we want to request
+    this._compiledValues = [] // compiled values that are ready to be concatenated
     if (limit) this.limit(limit)
   }
 
   /**
    * Modifier data to be sent with this node.
    *
-   * @param {Array} data
+   * @param {Object} data
    * @return GraphNode
    */
   modifiers (data) {
@@ -37,7 +36,7 @@ class GraphNode {
   /**
    * Gets the modifiers for this node.
    *
-   * @return {Array}
+   * @return {Object}
    */
   getModifiers () {
     return this._modifiers
@@ -164,7 +163,6 @@ class GraphNode {
     if (!accessToken) return
     this._modifiers[GraphNode.PARAM_APP_SECRET_PROOF] = createHmac('sha256', appSecret).update(accessToken).digest('hex')
   }
-
 }
 
 export default GraphNode

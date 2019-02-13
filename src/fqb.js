@@ -2,16 +2,19 @@ import GraphNode from './graph_node'
 import GraphEdge from './graph_edge'
 
 class FQB {
+  static BASE_GRAPH_URL = 'https://graph.facebook.com'
+  static BASE_GRAPH_URL_BETA = 'https://graph.beta.facebook.com'
 
-  static BASE_GRAPH_URL = 'https://graph.facebook.com'            // production Graph API URL
-  static BASE_GRAPH_URL_BETA = 'https://graph.beta.facebook.com'  // beta tier URL of the Graph API
-
+  /**
+   * @param {Object} config - An array of config options.
+   * @param {string} graphEndpoint - The name of the Graph API endpoint.
+   */
   constructor (config = {}, graphEndpoint = '') {
-    this._graphNode               // the GraphNode we are working with
-    this._graphVersion            // the URL prefix version of the Graph API
-    this._appSecret               // the application secret key
-    this._enableBetaMode = false  // a toggle to enable the beta tier of the Graph API
-    this._config = config         // the config options sent in from the user
+    this._graphNode = undefined // the GraphNode we are working with
+    this._graphVersion = undefined // the URL prefix version of the Graph API
+    this._appSecret = undefined // the application secret key
+    this._enableBetaMode = false // a toggle to enable the beta tier of the Graph API
+    this._config = config // the config options sent in from the user
 
     this._graphNode = new GraphNode(graphEndpoint)
     if (config.hasOwnProperty('accessToken')) this.accessToken(config.accessToken)
@@ -89,7 +92,7 @@ class FQB {
   /**
    * Alias to method on GraphNode.
    *
-   * @param {Array} data
+   * @param {Object} data
    *
    * @return FQB
    */
@@ -137,7 +140,6 @@ class FQB {
       ? FQB.BASE_GRAPH_URL_BETA
       : FQB.BASE_GRAPH_URL
   }
-
 }
 
 export default FQB
