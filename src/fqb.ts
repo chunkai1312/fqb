@@ -1,22 +1,29 @@
 import GraphNode from './graph_node'
 import GraphEdge from './graph_edge'
 
+type FQBConfig = {
+  accessToken?: string;
+  graphVersion?: string;
+  appSecret?: string;
+  enableBetaMode?: boolean;
+}
+
 class FQB {
-  static BASE_GRAPH_URL = 'https://graph.facebook.com'
-  static BASE_GRAPH_URL_BETA = 'https://graph.beta.facebook.com'
+  static BASE_GRAPH_URL = 'https://graph.facebook.com' // production Graph API URL
+  static BASE_GRAPH_URL_BETA = 'https://graph.beta.facebook.com' // beta tier URL of the Graph API
+  private _graphNode: GraphNode // the GraphNode we are working with
+  private _graphVersion: string // the URL prefix version of the Graph API
+  private _appSecret: string // the application secret key
+  private _enableBetaMode: boolean // the application secret key
+  private _config: FQBConfig // the config options sent in from the user
 
   /**
    * @param {Object} config - An array of config options.
    * @param {string} graphEndpoint - The name of the Graph API endpoint.
    */
-  constructor (config = {}, graphEndpoint = '') {
-    this._graphNode = undefined // the GraphNode we are working with
-    this._graphVersion = undefined // the URL prefix version of the Graph API
-    this._appSecret = undefined // the application secret key
-    this._enableBetaMode = false // a toggle to enable the beta tier of the Graph API
-    this._config = config // the config options sent in from the user
-
+  constructor (config: FQBConfig = {}, graphEndpoint?: string) {
     this._graphNode = new GraphNode(graphEndpoint)
+    this._config = config
     if (config.hasOwnProperty('accessToken')) this.accessToken(config.accessToken)
     if (config.hasOwnProperty('graphVersion')) this.graphVersion(config.graphVersion)
     if (config.hasOwnProperty('appSecret')) this._appSecret = config.appSecret
@@ -29,7 +36,7 @@ class FQB {
    * @param {string} graphNodeName - The node name.
    * @return FQB
    */
-  node (graphNodeName) {
+  node (graphNodeName: string): FQB {
     return new FQB(this._config, graphNodeName)
   }
 
@@ -40,7 +47,7 @@ class FQB {
    * @param {Array}  fields - The fields we want on the edge.
    * @return GraphEdge
    */
-  edge (edgeName, fields) {
+  edge (edgeName: string, fields?: string[]): GraphEdge {
     return new GraphEdge(edgeName, fields)
   }
 
@@ -50,7 +57,7 @@ class FQB {
    * @param {(Array|string)} fields
    * @return FQB
    */
-  fields (...fields) {
+  fields (...fields): this {
     if (fields.length === 1 && Array.isArray(fields[0])) this._graphNode.fields(fields[0])
     else this._graphNode.fields(fields)
     return this
@@ -62,8 +69,8 @@ class FQB {
    * @param {string} accessToken - The access token to overwrite the default.
    * @return FQB
    */
-  accessToken (accessToken) {
-    this._graphNode.modifiers(Object.assign(this._graphNode._modifiers, { access_token: accessToken }))
+  accessToken (accessToken: string): this {
+    this._graphNode.modifiers(Object.assign(this._graphNode.getModifiers(), { access_token: accessToken })) // eslint-disable-line @typescript-eslint/camelcase
     return this
   }
 
@@ -73,7 +80,7 @@ class FQB {
    * @param {string} graphVersion - The access token to overwrite the default.
    * @return FQB
    */
-  graphVersion (graphVersion) {
+  graphVersion (graphVersion: string): this {
     this._graphVersion = graphVersion
     return this
   }
@@ -84,7 +91,7 @@ class FQB {
    * @param {number} limit
    * @return FQB
    */
-  limit (limit) {
+  limit (limit: number): this {
     this._graphNode.limit(limit)
     return this
   }
@@ -96,7 +103,7 @@ class FQB {
    *
    * @return FQB
    */
-  modifiers (data) {
+  modifiers (data: object): this {
     this._graphNode.modifiers(data)
     return this
   }
@@ -106,7 +113,7 @@ class FQB {
    *
    * @return {string}
    */
-  asUrl () {
+  asUrl (): string {
     return `${this.getHostname()}${this.asEndpoint()}`
   }
 
@@ -115,7 +122,7 @@ class FQB {
    *
    * @return {string}
    */
-  asEndpoint () {
+  asEndpoint (): string {
     let graphVersionPrefix = ''
     if (this._graphVersion) graphVersionPrefix = `/${this._graphVersion}`
     return `${graphVersionPrefix}${this._graphNode.asUrl(this._appSecret)}`
@@ -126,7 +133,7 @@ class FQB {
    *
    * @return {string}
    */
-  toString () {
+  toString (): string {
     return this.asUrl()
   }
 
@@ -135,7 +142,7 @@ class FQB {
    *
    * @return {string}
    */
-  getHostname () {
+  getHostname (): string {
     return (this._enableBetaMode)
       ? FQB.BASE_GRAPH_URL_BETA
       : FQB.BASE_GRAPH_URL

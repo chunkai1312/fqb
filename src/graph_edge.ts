@@ -6,7 +6,7 @@ class GraphEdge extends GraphNode {
    *
    * @return {Array}
    */
-  toEndpoints () {
+  toEndpoints (): string[] {
     const endpoints = []
 
     const children = this.getChildEdges()
@@ -22,11 +22,11 @@ class GraphEdge extends GraphNode {
    *
    * @return {Array}
    */
-  getChildEdges () {
+  getChildEdges (): Array<string[]> {
     const edges = []
     let hasChildren = false
 
-    this._fields.forEach(field => {
+    this._fields.forEach((field: string | GraphEdge) => {
       if (field instanceof GraphEdge) {
         hasChildren = true
 
@@ -47,7 +47,7 @@ class GraphEdge extends GraphNode {
   /**
    * Compile the modifier values.
    */
-  compileModifiers () {
+  compileModifiers (): void {
     if (!Object.keys(this._modifiers).length) return
 
     const processedModifiers = []
@@ -64,12 +64,12 @@ class GraphEdge extends GraphNode {
   /**
    * Compile the field values.
    */
-  compileFields () {
+  compileFields (): void {
     if (!this._fields.length) return
 
     const processedFields = []
 
-    this._fields.forEach(field => {
+    this._fields.forEach((field: string | GraphEdge) => {
       processedFields.push(
         (field instanceof GraphEdge) ? field.asUrl() : encodeURIComponent(field)
       )
@@ -83,7 +83,7 @@ class GraphEdge extends GraphNode {
    *
    * @return {string}
    */
-  compileUrl () {
+  compileUrl (): string {
     let append = ''
     if (this._compiledValues.length) append = this._compiledValues.join('')
     return this._name + append

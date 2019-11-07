@@ -1,26 +1,27 @@
 import { expect } from 'chai'
 import FQB from '../src/fqb'
-import GraphNode from '../src/graph_node'
-import GraphEdge from '../src/graph_edge'
 
 describe('FQB', () => {
   describe('#constructor()', () => {
     it('should be instantiated', () => {
       const fqb = new FQB()
       expect(fqb).to.be.an.instanceof(FQB)
+      expect(fqb.asEndpoint()).to.equal('/')
+      expect(fqb.asUrl()).to.equal('https://graph.facebook.com/')
+      expect(fqb.toString()).to.equal(fqb.asUrl())
     })
 
     it('should be instantiated by passing the arguments config', () => {
       const fqb = new FQB({ graphVersion: 'v2.0' })
       expect(fqb).to.be.an.instanceof(FQB)
-      expect(fqb._graphVersion).to.equal('v2.0')
+      expect(fqb.asEndpoint()).to.equal('/v2.0/')
+      expect(fqb.asUrl()).to.equal('https://graph.facebook.com/v2.0/')
+      expect(fqb.toString()).to.equal(fqb.asUrl())
     })
 
     it('should be instantiated by passing the arguments config and graphEndpoint', () => {
       const fqb = new FQB({ graphVersion: 'v2.0' }, 'node')
       expect(fqb).to.be.an.instanceof(FQB)
-      expect(fqb._config.graphVersion).to.equal('v2.0')
-      expect(fqb._graphNode).to.be.an.instanceof(GraphNode)
       expect(fqb.asEndpoint()).to.equal('/v2.0/node')
       expect(fqb.asUrl()).to.equal('https://graph.facebook.com/v2.0/node')
       expect(fqb.toString()).to.equal(fqb.asUrl())
@@ -29,8 +30,6 @@ describe('FQB', () => {
     it('should be enable beta mode to return the beta hostname', () => {
       const fqb = new FQB({ graphVersion: 'v2.0', enableBetaMode: true }, 'node')
       expect(fqb).to.be.an.instanceof(FQB)
-      expect(fqb._config.graphVersion).to.equal('v2.0')
-      expect(fqb._graphNode).to.be.an.instanceof(GraphNode)
       expect(fqb.asEndpoint()).to.equal('/v2.0/node')
       expect(fqb.asUrl()).to.equal('https://graph.beta.facebook.com/v2.0/node')
       expect(fqb.toString()).to.equal(fqb.asUrl())
@@ -47,7 +46,6 @@ describe('FQB', () => {
       const fqb = new FQB()
       const node = fqb.node('node')
       expect(node).to.be.an.instanceof(FQB)
-      expect(node._graphNode).to.be.an.instanceof(GraphNode)
       expect(node.asEndpoint()).to.equal('/node')
     })
   })
@@ -56,14 +54,13 @@ describe('FQB', () => {
     it('should be instantiated', () => {
       const fqb = new FQB()
       const edge = fqb.edge('foo')
-      expect(edge).to.be.an.instanceof(GraphEdge)
+      expect(edge.asUrl()).to.equal('foo')
     })
 
     it('should be instantiated with fields', () => {
       const fqb = new FQB()
-      const edge = fqb.edge('edge')
-      expect(edge).to.be.an.instanceof(GraphEdge)
-      expect(edge.asUrl()).to.equal('edge')
+      const edge = fqb.edge('foo').fields(['foo', 'bar'])
+      expect(edge.asUrl()).to.equal('foo{foo,bar}')
     })
   })
 
@@ -120,7 +117,7 @@ describe('FQB', () => {
   describe('#limit()', () => {
     it('should set the parameter limit', () => {
       const fqb = new FQB()
-      const request = fqb.node('foo').limit('5')
+      const request = fqb.node('foo').limit(5)
       expect(request.asEndpoint()).to.equal('/foo?limit=5')
     })
   })

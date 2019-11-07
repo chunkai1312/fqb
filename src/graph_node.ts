@@ -1,11 +1,16 @@
 import createHmac from 'create-hmac'
 import qs from 'qs'
+import GraphEdge from './graph_edge'
 
 class GraphNode {
   static PARAM_FIELDS = 'fields' // the name of the fields param
   static PARAM_LIMIT = 'limit' // the name of the limit param
   static PARAM_ACCESS_TOKEN = 'access_token' // the name of the access token param
   static PARAM_APP_SECRET_PROOF = 'appsecret_proof' // the name of the app secret proof param
+  protected _name: string // the name of the node
+  protected _modifiers: object // the modifiers that will be appended to the node
+  protected _fields: (string | GraphEdge)[] // the fields & GraphEdge's that we want to request
+  protected _compiledValues: string[] // compiled values that are ready to be concatenated
 
   /**
    * Create a new GraphNode value object.
@@ -14,11 +19,11 @@ class GraphNode {
    * @param {Array}  fields
    * @param {number} limit
    */
-  constructor (name, fields = [], limit = 0) {
-    this._name = name // the name of the node
-    this._modifiers = {} // the modifiers that will be appended to the node
-    this._fields = fields // the fields & GraphEdge's that we want to request
-    this._compiledValues = [] // compiled values that are ready to be concatenated
+  constructor (name: string, fields?: (string | GraphEdge)[], limit?: number) {
+    this._name = name || ''
+    this._modifiers = {}
+    this._fields = fields || []
+    this._compiledValues = []
     if (limit) this.limit(limit)
   }
 
@@ -28,7 +33,7 @@ class GraphNode {
    * @param {Object} data
    * @return GraphNode
    */
-  modifiers (data) {
+  modifiers (data: object): this {
     Object.assign(this._modifiers, data)
     return this
   }
@@ -38,7 +43,7 @@ class GraphNode {
    *
    * @return {Object}
    */
-  getModifiers () {
+  getModifiers (): object {
     return this._modifiers
   }
 
@@ -46,9 +51,9 @@ class GraphNode {
    * Gets a modifier if it is set.
    *
    * @param {string} key
-   * @return {(Mixed|null)}
+   * @return {unknown}
    */
-  getModifier (key) {
+  getModifier (key: string): unknown {
     return this._modifiers[key] ? this._modifiers[key] : null
   }
 
@@ -58,7 +63,7 @@ class GraphNode {
    * @param {number} limit
    * @return GraphNode
    */
-  limit (limit) {
+  limit (limit: number): this {
     this._modifiers[GraphNode.PARAM_LIMIT] = limit
     return this
   }
@@ -66,9 +71,9 @@ class GraphNode {
   /**
    * Gets the limit for this node.
    *
-   * @return {(number|null)}
+   * @return {(number|undefined)}
    */
-  getLimit () {
+  getLimit (): (number | undefined) {
     return this._modifiers[GraphNode.PARAM_LIMIT]
   }
 
@@ -79,7 +84,7 @@ class GraphNode {
    *
    * @return GraphNode
    */
-  fields (...fields) {
+  fields (...fields): this {
     this._fields = (fields.length === 1 && Array.isArray(fields[0]))
       ? this._fields.concat(fields[0])
       : this._fields.concat(fields)
@@ -91,21 +96,21 @@ class GraphNode {
    *
    * @return {Array}
    */
-  getFields () {
+  getFields (): (string | GraphEdge)[] {
     return this._fields
   }
 
   /**
    * Clear the compiled values.
    */
-  resetCompiledValues () {
+  resetCompiledValues (): void {
     this._compiledValues = []
   }
 
   /**
    * Compile the modifier values.
    */
-  compileModifiers () {
+  compileModifiers (): void {
     if (!Object.keys(this._modifiers).length) return
     this._compiledValues = qs.stringify(this._modifiers).split('&')
   }
@@ -113,7 +118,7 @@ class GraphNode {
   /**
    * Compile the field values.
    */
-  compileFields () {
+  compileFields (): void {
     if (!this._fields.length) return
     this._compiledValues.push(`${GraphNode.PARAM_FIELDS}=${this._fields.join()}`)
   }
@@ -123,7 +128,7 @@ class GraphNode {
    *
    * @return {string}
    */
-  compileUrl () {
+  compileUrl (): string {
     let append = ''
     if (this._compiledValues.length) append = `?${this._compiledValues.join('&')}`
     return `/${this._name}${append}`
@@ -135,7 +140,7 @@ class GraphNode {
    * @param {(string|null)} appSecret - The app secret for signing the URL with app secret proof.
    * @return {string}
    */
-  asUrl (appSecret = null) {
+  asUrl (appSecret?: string): string {
     this.resetCompiledValues()
     if (appSecret) this.addAppSecretProofModifier(appSecret)
     this.compileModifiers()
@@ -149,7 +154,7 @@ class GraphNode {
    * @param {(string|null)} appSecret - The app secret for signing the URL with app secret proof.
    * @return {string}
    */
-  toString () {
+  toString (): string {
     return this.asUrl()
   }
 
@@ -158,8 +163,8 @@ class GraphNode {
    *
    * @param {string} appSecret
    */
-  addAppSecretProofModifier (appSecret) {
-    const accessToken = this.getModifier(GraphNode.PARAM_ACCESS_TOKEN)
+  addAppSecretProofModifier (appSecret: string): void {
+    const accessToken = this.getModifier(GraphNode.PARAM_ACCESS_TOKEN) as string
     if (!accessToken) return
     this._modifiers[GraphNode.PARAM_APP_SECRET_PROOF] = createHmac('sha256', appSecret).update(accessToken).digest('hex')
   }
