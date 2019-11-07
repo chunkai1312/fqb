@@ -1,20 +1,20 @@
 import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
-import babel from 'rollup-plugin-babel'
+import typescript from 'rollup-plugin-typescript'
 import { terser } from 'rollup-plugin-terser'
 import pkg from './package.json'
 
 export default [
   // CommonJS (for Node) and ES module (for bundlers) build
   {
-    input: 'src/index.js',
+    input: 'src/index.ts',
     external: ['create-hmac', 'qs'],
     output: [
       { file: pkg.main, format: 'cjs' },
       { file: pkg.module, format: 'es' }
     ],
     plugins: [
-      babel({
+      typescript({
         exclude: ['node_modules/**']
       })
     ]
@@ -22,7 +22,7 @@ export default [
 
   // browser-friendly UMD build
   {
-    input: 'src/index.js',
+    input: 'src/index.ts',
     output: {
       name: 'FQB',
       file: pkg.browser,
@@ -30,7 +30,7 @@ export default [
     },
     plugins: [
       resolve(),
-      babel({
+      typescript({
         exclude: ['node_modules/**']
       }),
       commonjs()
@@ -39,7 +39,7 @@ export default [
 
   // browser-friendly UMD build for production
   {
-    input: 'src/index.js',
+    input: 'src/index.ts',
     output: {
       name: 'FQB',
       file: 'dist/fqb.min.js',
@@ -47,7 +47,7 @@ export default [
     },
     plugins: [
       resolve(),
-      babel({
+      typescript({
         exclude: ['node_modules/**']
       }),
       commonjs(),
