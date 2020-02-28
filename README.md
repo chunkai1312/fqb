@@ -69,13 +69,13 @@ const fqb = new FQB()
   .node('me')
   .fields(['id', 'email'])
   .accessToken('user-access-token')
-  .graphVersion('v3.2')
+  .graphVersion('v5.0')
 
 console.log(fqb.asEndpoint())
-// /v3.2/me?access_token=user-access-token&fields=id,email
+// /v5.0/me?access_token=user-access-token&fields=id,email
 
 console.log(fqb.asUrl())
-// https://graph.facebook.com/v3.2/me?access_token=user-access-token&fields=id,email
+// https://graph.facebook.com/v5.0/me?access_token=user-access-token&fields=id,email
 ```
 
 ### Get data across multiple edges
