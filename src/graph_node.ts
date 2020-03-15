@@ -1,5 +1,5 @@
-import createHmac from 'create-hmac'
 import qs from 'qs'
+import Crypto from 'crypto-js'
 import GraphEdge from './graph_edge'
 
 class GraphNode {
@@ -166,7 +166,7 @@ class GraphNode {
   addAppSecretProofModifier (appSecret: string): void {
     const accessToken = this.getModifier(GraphNode.PARAM_ACCESS_TOKEN) as string
     if (!accessToken) return
-    this._modifiers[GraphNode.PARAM_APP_SECRET_PROOF] = createHmac('sha256', appSecret).update(accessToken).digest('hex')
+    this._modifiers[GraphNode.PARAM_APP_SECRET_PROOF] = Crypto.enc.Hex.stringify(Crypto.HmacSHA256(accessToken, appSecret))
   }
 }
 
