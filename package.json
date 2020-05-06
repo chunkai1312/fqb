@@ -1,6 +1,6 @@
 {
   "name": "fqb",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Facebook Graph API query builder for JavaScript",
   "main": "lib/fqb.js",
   "unpkg": "dist/fqb.js",
